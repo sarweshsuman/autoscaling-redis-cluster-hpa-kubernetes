@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cluster-coordinator
+spec:
+  selector:
+    matchLabels:
+      app: redis-cluster-coordinator-lbl
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-cluster-coordinator-lbl
+    spec:
+      containers:
+      - name: redis-cluster-coordinator-pod
+        image: redis-cluster-controller:0.1
+        command: ['/bin/bash','/entrypoint.sh']

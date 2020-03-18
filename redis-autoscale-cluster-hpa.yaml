@@ -1,0 +1,26 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: redis-autoscale-cluster
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: redis-autoscale-cluster
+  minReplicas: 6
+  maxReplicas: 12
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 60
+# Scale Down Disable Feature is Not Available in this version of K8S v1.17.3
+#  behavior:
+#    scaleDown:
+#      selectPolicy: Disabled
+#      policies:
+#      - type: Pods
+#        value: 1
+#        periodSeconds: 20 
